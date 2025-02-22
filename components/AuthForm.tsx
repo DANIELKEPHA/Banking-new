@@ -22,8 +22,10 @@ import { Input } from "@/components/ui/input";
 import CustomInput from "./CustomInput";
 import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const AuthForm = ({ type }: { type: string }) => {
+  const router = useRouter();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -39,13 +41,39 @@ const AuthForm = ({ type }: { type: string }) => {
   });
 
   // ✅ Properly handle async state updates
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-      console.log("Form Submitted:", values);
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
+      // Sign up with Appwrite & create plaid token
+
+      if (type === "sign-up") {
+        // const userData = {
+        //   firstName: data.firstName!,
+        //   lastName: data.lastName!,
+        //   address1: data.address1!,
+        //   city: data.city!,
+        //   state: data.state!,
+        //   postalCode: data.postalCode!,
+        //   dateOfBirth: data.dateOfBirth!,
+        //   ssn: data.id!,
+        //   email: data.email,
+        //   password: data.password,
+        // };
+
+        const newUser = await signUp(data);
+
+        setUser(newUser);
+      }
+
+      if (type === "sign-in") {
+        // const response = await signIn({
+        //   email: data.email,
+        //   password: data.password,
+        // });
+        // if (response) router.push("/");
+      }
     } catch (error) {
-      console.error("Submission Error:", error);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -90,33 +118,41 @@ const AuthForm = ({ type }: { type: string }) => {
                       control={form.control}
                       name="firstName"
                       label="First Name"
-                      placeholder="Enter your first name"
+                      placeholder="Example Mercy"
                     />
                     <CustomInput
                       control={form.control}
                       name="lastName"
                       label="Last Name"
-                      placeholder="Enter your last name"
+                      placeholder="Example Ngeru"
                     />
                   </div>
-                  <CustomInput
-                    control={form.control}
-                    name="address1"
-                    label="Address"
-                    placeholder="Enter your first address"
-                  />
                   <div className="flex gap-4">
+                    <CustomInput
+                      control={form.control}
+                      name="state"
+                      label="State"
+                      placeholder="Example Kenya"
+                    />
                     <CustomInput
                       control={form.control}
                       name="city"
                       label="City"
                       placeholder="Example: Nairobi"
                     />
+                  </div>
+                  <div className="flex gap-4">
+                    <CustomInput
+                      control={form.control}
+                      name="address1"
+                      label="Address"
+                      placeholder="Example 123"
+                    />
                     <CustomInput
                       control={form.control}
                       name="postalCode"
                       label="Postal Code"
-                      placeholder="Example: 00100"
+                      placeholder="Example 00100"
                     />
                   </div>
                   <div className="flex gap-4">
