@@ -38,22 +38,22 @@ export const formatDateTime = (dateString: Date) => {
   };
 
   const formattedDateTime: string = new Date(dateString).toLocaleString(
-    "en-US",
+    "en-KES",
     dateTimeOptions
   );
 
   const formattedDateDay: string = new Date(dateString).toLocaleString(
-    "en-US",
+    "en-KES",
     dateDayOptions
   );
 
   const formattedDate: string = new Date(dateString).toLocaleString(
-    "en-US",
+    "en-KES",
     dateOptions
   );
 
   const formattedTime: string = new Date(dateString).toLocaleString(
-    "en-US",
+    "en-KES",
     timeOptions
   );
 
@@ -66,15 +66,15 @@ export const formatDateTime = (dateString: Date) => {
 };
 
 export function formatAmount(amount: number): string {
-  const formatter = new Intl.NumberFormat("en-US", {
+  const formatter = new Intl.NumberFormat("en-KE", {
+    // Use "en-KE" for Kenya locale
     style: "currency",
-    currency: "USD",
+    currency: "KES", // Change currency to KES
     minimumFractionDigits: 2,
   });
 
   return formatter.format(amount);
 }
-
 export const parseStringify = (value: any) => JSON.parse(JSON.stringify(value));
 
 export const removeSpecialCharacters = (value: string) => {

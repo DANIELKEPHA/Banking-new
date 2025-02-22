@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   title: "Darubini Screening app",
   description: "Facilitating Safe Recruitment Decisions.",
   icons: {
-    icon: "/icons/logo.svg",
+    icon: "http://localhost:3000/icons/logo.svg",
   },
 };
 
